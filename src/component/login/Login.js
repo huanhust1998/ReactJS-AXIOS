@@ -27,13 +27,15 @@ function Login() {
             setValidate(true)
         } else {
             UserService.login(state.id, state.password).then(response => {
-                console.log(response);
+                if (response.status === 200) {
+                    history.push("/home");
+                }
             })
         }
     }
 
     return (
-        <div>
+        <div className="container text-center">
             <h3 className="text-center font-weight-bold mt-5">관리자 로그인</h3>
             <div id="login-box" className="col-md-12">
                 <form id="login-form" onSubmit={handleLogin} noValidate
