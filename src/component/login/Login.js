@@ -1,15 +1,16 @@
 import React, {useState} from "react";
-import {useHistory} from "react-router";
 import {Link} from "react-router-dom";
-import UserService from "../../service/UserService";
+import {useDispatch} from "react-redux";
+import {login} from "../../actions/auth";
 
 function Login() {
+
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         id: "",
         password: ""
     })
     const [validate, setValidate] = useState(false)
-    let history = useHistory();
 
     function handleGetValueLogin(e) {
         setState({
@@ -26,13 +27,11 @@ function Login() {
         if (!formLogin.checkValidity()) {
             setValidate(true)
         } else {
-            UserService.login(state.id, state.password).then(response => {
-                if (response.status === 200) {
-                    history.push("/home");
-                }
-            })
+            const action = login(state.id, state.password);
+            dispatch(action);
         }
     }
+
 
     return (
         <div className="container text-center">
